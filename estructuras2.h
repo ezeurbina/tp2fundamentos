@@ -1,6 +1,12 @@
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
+struct nodo;
+typedef struct nodo* p_nodo;
+
+struct lata;
+typedef struct lata* p_lata;
+
 typedef struct lista {
 p_nodo nodo;
 int cantidad_nodos;
