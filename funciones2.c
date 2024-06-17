@@ -4,7 +4,10 @@
 
 
 p_nodo crearNodo(p_lata lata){
-    p_nodo n=(p_nodo*)malloc (sizeof(p_nodo));
+    p_nodo n=(p_nodo)malloc (sizeof(nodo));
+    if (n==NULL){
+        printf("%s\n","error");
+    }
     n->elemento=lata;
     n->siguiente=NULL;
     return n;
@@ -13,5 +16,6 @@ p_nodo crearNodo(p_lata lata){
 void imprimirNodo(p_nodo n){
     printf("%s\n",n->elemento->Marca);
     printf("%s\n",n->elemento->Color);
+    printf("%f\n",n->elemento->tamanio);
 } 
     
