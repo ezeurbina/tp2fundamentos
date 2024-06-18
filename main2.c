@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h> //funcion toupper
-#include "estructuras2.h"
-#include "funciones2.c"
+#include "estructuras.h"
+#include "funciones.c"
 
 int main() {
     p_lista lista=crearLista();
@@ -16,8 +16,8 @@ int main() {
     p_lata lata2 = &lata2_data;
     p_lata lata3 = &lata3_data;
     p_lata lata4 = &lata4_data;
-    //imprimirNodo(crearNodo(lata1));
-    //imprimirNodo(crearNodo(lata2));
+
+    int indice;
 
     insertarNodo(lista,crearNodo(lata1));
     insertarNodo(lista,crearNodo(lata2));
@@ -25,7 +25,10 @@ int main() {
     insertarNodo(lista,crearNodo(lata4));
 
     imprimirLista(lista);
-    eliminarNodo(lista,1);
+
+    printf("Que numero de indice quiere borrar\n");
+    scanf("%d",&indice);
+    eliminarNodo(lista,indice);
     imprimirLista(lista);
 
     return 0;

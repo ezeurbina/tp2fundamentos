@@ -1,23 +1,29 @@
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
-typedef struct lata {
-    char Marca[20];
-    char Color[20];
-    float tamanio;
-} Lata;
+struct nodo;
+typedef struct nodo* p_nodo;
 
-typedef struct nodo {
-    Lata lata;
-    struct nodo *siguiente;
-}Nodo;
+struct lata;
+typedef struct lata* p_lata;
 
 typedef struct lista {
-    Nodo *raiz;
-    Nodo *ultimo;
-    int cantidad_nodos;
-}Lista;
+p_nodo nodo;
+int cantidad_nodos;
+} lista, *p_lista;
 
-//enum status = {status_ok, status_fail};
+
+typedef struct nodo {
+p_lata elemento;
+p_nodo siguiente;
+} nodo, *p_nodo;
+
+
+typedef struct lata {
+char Marca[20];
+char Color[20];
+float tamanio;
+} lata, *p_lata;
+
 
 #endif
