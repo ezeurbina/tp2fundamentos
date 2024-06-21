@@ -9,7 +9,6 @@
 int main(){
     p_lista lista=crearLista();
     char color[20];
-    char marcaBuscada[] = "NEGRONI";
     float cantidad_color;
 
 
@@ -17,11 +16,15 @@ int main(){
 
     imprimirLista(lista);
 
-    cantidad_color=totalColor(lista,"NEGRO");
+    cantidad_color=totalColor(lista,"ROSA");
     printf("Total Color:%f litros\n",cantidad_color);
 
 
-    printf("%i\n",totalLatasMarca(lista,marcaBuscada));
+    printf("%i\n",totalLatasMarca(lista,"COLORIN"));
+
+    disponibilidadColor(lista,"VERDE");
+
+    /*free listas*/
 
     return 1;
 }

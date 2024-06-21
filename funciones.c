@@ -56,6 +56,7 @@ void insertarNodo(p_lista lista, p_nodo nodo){
         }
         aux->siguiente = nodo;
     }
+    //printf("Producto Agregado");
     lista->cantidad_nodos++;
 
 }
@@ -134,3 +135,25 @@ int totalLatasMarca(p_lista lista, char marca[]){
     return suma;
 
 }
+
+void disponibilidadColor(p_lista lista, char color[]){
+    p_nodo aux;
+    int cantidad=0;
+    aux=lista->nodo;
+    while(aux!=NULL){
+        if((strcmp(aux->elemento->Color, color))==0){
+            printf("%s, %f litros\n",aux->elemento->Marca,aux->elemento->tamanio);
+            cantidad++;
+        }
+        aux=aux->siguiente;
+    }
+    if(cantidad==0){
+        printf("Color no disponible\n");
+        }
+}
+
+void verificarColorCantidad(p_lista lista, char color[],char cantidad[]){
+    p_nodo aux;
+}
+
+
