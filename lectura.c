@@ -14,17 +14,24 @@ int main(){
 
     leerArchivo(lista);
 
-    imprimirLista(lista);
+    //imprimirLista(lista);
 
-    cantidad_color=totalColor(lista,"ROSA");
-    printf("Total Color:%f litros\n",cantidad_color);
+    //insertarNuevaLata(lista);
+
+    //cantidad_color=totalColor(lista,"ROSA");
+    //printf("Total Color:%f litros\n",cantidad_color);
 
 
-    printf("%i\n",totalLatasMarca(lista,"COLORIN"));
+    //printf("%i\n",totalLatasMarca(lista,"COLORIN"));
 
-    disponibilidadColor(lista,"VERDE");
+    //disponibilidadColor(lista,"BLANCO");
+
+    //verificarColorCantidad(lista,"BLANCO",0.5);
 
     /*free listas*/
+    //totalColor(lista,"NEGRO");
+
+    totalLatasMarca(lista,"ALBA");
 
     return 1;
 }

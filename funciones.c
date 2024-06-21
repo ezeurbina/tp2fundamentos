@@ -14,7 +14,6 @@ p_nodo crearNodo(p_lata lata){
     nodo->siguiente=NULL;
     return nodo;
 }
-
 /*imprime el nodo*/
 void imprimirNodo(p_nodo nodo){
     printf("%s\n",nodo->elemento->Marca);
@@ -22,7 +21,6 @@ void imprimirNodo(p_nodo nodo){
     printf("%f\n",nodo->elemento->tamanio);
     printf("\n");
 } 
-
 /*crea la lista inicializando la cantidad de nodos en 0 y le da ele elemento NULL a nodo
 si no puede asignarse la memoria imprime "ERROR" y devuelve NULL*/
 p_lista crearLista(){
@@ -56,7 +54,7 @@ void insertarNodo(p_lista lista, p_nodo nodo){
         }
         aux->siguiente = nodo;
     }
-    //printf("Producto Agregado");
+    printf("Producto Agregado\n");
     lista->cantidad_nodos++;
 
 }
@@ -88,6 +86,8 @@ void eliminarNodo(p_lista lista,int indice){
 
 
 }
+
+/*PUNTO 1*/
 void leerArchivo(p_lista lista) {
     FILE *archivo = fopen("latas.txt", "r");
     if (archivo == NULL) {
@@ -107,33 +107,103 @@ void leerArchivo(p_lista lista) {
         }
 }
 
+/*PUNTO 3.A)*/
+void insertarNuevaLata(p_lista lista){
+    char Marca[20];
+    char Color[20];
+    float tamanio;
+    p_lata nueva_lata = (p_lata)malloc(sizeof(lata));
 
-float totalColor(p_lista lista,char color[]){
-    p_nodo aux;
-    float suma=0;
-    aux=lista->nodo;
-    while(aux!=NULL){
-        if ((strcmp(aux->elemento->Color,color))==0){
-            suma+=aux->elemento->tamanio;
-        }
-        aux=aux->siguiente;
-    }
-    return suma;
+    printf("Ingrese la Marca: ");
+    scanf("%s",Marca);
+    printf("Ingrese el color: ");
+    scanf("%s",Color);
+    printf("Ingrese el tamaño de la lata: ");
+    scanf("%f",&tamanio);
+
+    strcpy(nueva_lata->Marca, Marca);
+    strcpy(nueva_lata->Color, Color);
+    nueva_lata->tamanio = tamanio;
+    insertarNodo(lista, crearNodo(nueva_lata));
 
 }
 
-int totalLatasMarca(p_lista lista, char marca[]){
+/*se crea la lista necesaria para los strings*/
+p_lista_str crearListaStr(){
+    p_lista_str lista=(p_lista_str)malloc(sizeof(lista_str));
+    if(lista==NULL){
+        printf("ERROR");
+        return NULL;
+    }
+    lista->nodo=NULL;
+    lista->cantidad_nodos=0;
+    return lista;
+    
+}
+
+p_nodo_str crearNodoStr(char str[]){
+    p_nodo_str nodo=(p_nodo_str)malloc (sizeof(nodo_str));
+    if (nodo==NULL){
+        printf("%s\n","error");
+        return NULL;
+    }
+    strcpy(nodo->str,str); 
+    nodo->siguiente=NULL;
+    return nodo;
+}
+
+void insertarNodoStr(p_lista_str lista, p_nodo_str nodo){
+    if(lista->cantidad_nodos==0){
+        lista->nodo=nodo;
+    }else{
+        p_nodo_str aux = lista->nodo;
+        while (aux->siguiente != NULL) {
+            aux = aux->siguiente;
+        }
+        aux->siguiente = nodo;
+    }
+    lista->cantidad_nodos++;
+}
+
+void imprimirStr(p_lista_str lista){
+    p_nodo_str aux=lista->nodo;
+
+    while(aux!=NULL){
+        printf("%s, ",aux->str);
+        aux=aux->siguiente;
+    }
+    printf("\n");
+}
+
+int cadenaEnLista(p_lista_str lista, char str[]){
+    p_nodo_str aux=lista->nodo;
+    while(aux->str!=NULL){
+        if ((strcmp(aux->str,str))==0){
+            return 1;
+        }else{
+            aux=aux->siguiente;
+        }
+    }
+    return 0;
+}
+
+void totalLatasMarca(p_lista lista, char marca[]){
     p_nodo aux;
-    int suma=0;
+    int cantidadLatas=0;
+    p_lista_str listaColor=crearListaStr();
     aux=lista->nodo;
     while(aux!=NULL){
         if((strcmp(aux->elemento->Marca,marca))==0){/*strcmp devuelve 0 cuando las cadenas son iguales*/
-            suma++;
+            if(!cadenaEnLista(listaColor,aux->elemento->Color)){
+                insertarNodoStr(listaColor,crearNodoStr(aux->elemento->Color));
+                cantidadLatas++;
+            }
         }
         aux=aux->siguiente;
     }
-    return suma;
-
+    printf("Colores: ");
+    imprimirStr(listaColor);
+    printf("Cantidad de latas: %i\n",cantidadLatas);
 }
 
 void disponibilidadColor(p_lista lista, char color[]){
@@ -152,8 +222,49 @@ void disponibilidadColor(p_lista lista, char color[]){
         }
 }
 
-void verificarColorCantidad(p_lista lista, char color[],char cantidad[]){
-    p_nodo aux;
+
+void verificarColorCantidad(p_lista lista, char color[],float cantidad){
+    if(estaVacia(lista)){
+        printf("LISTA VACIA\n");
+    }else{
+        p_nodo aux=lista->nodo;
+        p_lista_str listaStr=crearListaStr();
+        while(aux!=NULL){
+            if(((strcmp(aux->elemento->Color,color))==0) && (aux->elemento->tamanio==cantidad)){
+                if(!cadenaEnLista(listaStr,aux->elemento->Marca)){
+                    insertarNodoStr(listaStr,crearNodoStr(aux->elemento->Marca));
+                }
+            }
+
+            aux=aux->siguiente;
+        }
+        if(listaStr->cantidad_nodos==0){
+            printf("Stock no disponible\n");
+        }
+        imprimirStr(listaStr);
+    }
 }
+
+void totalColor(p_lista lista, char color[]){
+    p_nodo aux=lista->nodo;
+    p_lista_str listaStr=crearListaStr();
+    float totalColor=0;
+    int totalLatas=0;
+    while(aux!=NULL){
+        if((strcmp(aux->elemento->Color,color))==0){
+            if(!cadenaEnLista(listaStr,aux->elemento->Marca)){
+                insertarNodoStr(listaStr,crearNodoStr(aux->elemento->Marca));
+            }
+            totalColor+=aux->elemento->tamanio;
+            totalLatas++;
+            }
+            aux=aux->siguiente;
+        }
+    printf("Marcas: ");
+    imprimirStr(listaStr);
+    printf("Total Color: %f\n",totalColor);
+    printf("Cantidad latas: %i\n",totalLatas);    
+    }
+
 
 
