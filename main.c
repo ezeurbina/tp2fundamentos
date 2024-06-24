@@ -1,3 +1,8 @@
+/*ALUMNO: CRISTIAN EZEQUIEL URBINA
+  N LEGAJO: 112374
+  FORMA DE EJECUTAR EL ARCHIVO:
+  EN LA CARPETA QUE CONTIENE A TODOS LOS ARCHIVOS ESCRIBIR EN LA TERMINAL: make ejecutar*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
